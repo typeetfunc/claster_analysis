@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Анализ</title>
+<link href="http://imgx1.tmweb.ru/css/report.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/step2.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/d3.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/jquery-placeholder.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/dendrogram.js"></script>
+<meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
+
+</head>
+	<body>
+		<header>
+			<p class = "head">Анализ кластеризации региона</p>
+		</header>
+		<div id="h_line">
+		</div>
+		
+		<div id="main">
+			<div id="work_area">
+				<div id="top_line">
+					<p style="margin-left:10px; padding-top:6px;">
+						Шаг 4. Вывод результатов анализа данных.
+					</p>	
+				</div>
+												        																																																			 
+				<div id="report">
+					Коэфициент локализации:[% FILTER format ('%5.3f') %][% LQ %][%END%]<br>
+					[% IF LQ > 1.2 %]
+					Данный коэфициент локализации говорит о наличие кластера в регионе.
+					[% ELSE %]
+					Данный коэфициент локализации говорит об отсутствии кластера в регионе.
+					[% END %]
+					<br><br>
+					Предприятия в кластере:
+								<ul>
+								[%FOREACH i IN companies_i %]								
+									<li>
+										[% i %]
+									</li>
+								[% END %]
+								</ul>
+					Предприятия вне кластера:
+								<ul>
+								[%FOREACH j IN companies_o %]								
+									<li>
+										[% j %]
+									</li>
+								[% END %]
+								</ul>
+					Анализируемые характеристики:
+								<ul>
+								[%FOREACH j IN features %]								
+									<li>
+										[% j %]
+									</li>
+								[% END %]
+								</ul>
+								
+					Нормированые значения характеристик для каждого предприятия:<BR>
+					
+								<table class="table_tt" cellpadding="3">
+									<tr style="background-color: #197b30;">
+									<td style="background-color: #08141f; border:#08141f solid 1px;">&nbsp;</td> 
+									[% FOREACH k IN features%]
+										<td> [% k %] </td>
+									[% END %]
+									</tr>
+									[%FOREACH i IN companies_id %]								
+									<tr>
+									<td style="background-color: #197b30; padding-right:0px;">[% companies_full.$i %]</td>		
+											[%FOREACH j IN z_features.$i %]
+													<td>[% FILTER format('%5.3f') %][% j %][% END %]</td>
+											[% END %]
+									</tr>		
+									[% END %]
+								</table>
+								<br>
+					Таблица "расстояний" между предприятиями:
+								
+								<br>
+								<table class="table_tt" cellpadding="3">
+									<tr style="background-color: #197b30;">
+									<td style="background-color: #08141f; border:#08141f solid 1px;">&nbsp;</td> 
+									[%FOREACH k IN companies_id %]
+									 <td>[%  companies_full.$k %]</td>
+									[% END %]
+									</tr>
+									[%FOREACH l IN companies_id %]
+									<tr>
+									<td style="background-color: #197b30; padding-right:0px;">[% companies_full.$l %]</td>
+									[%FOREACH i IN companies_id %]								
+												
+													<td>
+													[% IF l < i %]
+														[% FILTER format('%5.3f') %][% matrix_distance.$l.$i %][% END %]
+													[% END %]
+													[% IF l == i %]
+														0
+													[% END %]
+													</td>
+									[% END %]
+									</tr>	
+									[% END %]
+								</table><br><br>
+								Минимальное расстояние между предприятиями <b>в</b> кластере: [% FILTER format('%5.3f') %][% min_i %][% END %]<BR>
+								Минимальное расстояние между предприятиями из кластера и внешними: [% FILTER format('%5.3f') %][% min_o %][% END %]<BR>
+								<BR>
+								Максимальное расстояние между предприятиями <b>в</b> кластере: [% FILTER format('%5.3f') %][% max_i %][% END %]<BR>
+								Максимальное расстояние между предприятиями из кластера и внешними: [% FILTER format('%5.3f') %][% max_o %][% END %]<BR><BR>
+								Среднее расстояние между предприятиями <b>в</b> кластере: [% FILTER format('%5.3f') %][% mid_i %][% END %] <BR>
+								Среднее расстояние между предприятиями <b>вне</b> кластере: [% FILTER format('%5.3f') %][% mid_o %][% END %]<BR>		
+								
+								<br><br>
+								<span style="font-size:22px; font-weight: bold;">Этапы работы метода Уорда</span>
+								<br>
+								<p style="font-size:14px; font-style: italic;"> В каждой строке таблицы отображен отдельный шаг метода Уорда. </p> 
+								[% count = 1%]
+								<table class="table_tt" cellpadding="3" align="center" width="600">
+								<tr><td>№ шага</td><td class="green_td">Состояние кластера</td><td class="green_td">Расстояние</td></tr>
+								[% FOREACH i IN vectors%]
+								<tr><td class="green_td" align="center">[% count %]</td>
+								    <td> [% i.item('children').join(' ') %] </td>
+								    <td align="center">[% FILTER format('%5.3f') %][% i.item('distance')%][% END %]</td>
+								[%count=count+1%]
+								[% END %]
+								</tr>></table>
+							<BR><BR>	
+								<span style="font-size:22px; font-weight: bold;">Этапы работы метода Одиночной связи</span>
+								<br>
+								<p style="font-size:14px; font-style: italic;">В каждой строке таблицы отображен отдельный шаг метода: имя объекта, добавленного в кластер и "расстояние" до его элементов.</p> 
+								
+								[% cnt = 1%]
+								<table class="table_tt" cellpadding="3" align="center" width="600">
+								<tr><td >№ шага</td><td class="green_td">Объект</td><td class="green_td">Расстояние</td></tr>
+								[% FOREACH i IN single_link %]								
+								<tr><td class="green_td" align="center">[% cnt %]</td><td> [% i.children.join(' ') %] </td><td align="center">[% FILTER format('%5.3f') %][% i.distance%][% END %]</td>
+								</tr>
+								[%cnt=cnt+1%]
+								[% END %]
+								</table>
+
+				</div>
+				</div>
+			</div>
+		</div>
+<p align = "center"> Метод Одиночной связи </p>
+<script type="text/javascript">									
+var treeData = [% json_str_link %];
+var bodyD3 = d3.select("body");
+makeDendrogram(bodyD3, paramDecart);
+</script>
+<br>
+<p align = "center"> Метод Уорда </p>
+<script type="text/javascript">
+var treeData = [% json_str_ward %];
+var bodyD3 = d3.select("body");
+makeDendrogram(bodyD3, paramDecart);
+</script>
+		<div id="f_line">
+		</div>
+		<footer>
+			<p class = "copy">© ФГБОУ  ВПО «ИрГУПС»</p>
+		</footer>
+	</body>
+</html>

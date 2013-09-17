@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Анализ</title>
+<link href="http://imgx1.tmweb.ru/css/step1.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/step1.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/jquery-placeholder.js"></script>
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+</head>
+	<body>
+		<header>
+			<p class = "head">Анализ кластеризации региона</p>
+		</header>
+		<div id="h_line">
+		</div>
+		<div id="main">
+			<form name="features1" action="http://imgx1.tmweb.ru/cgi-bin/step2.pl"  method="POST">
+			<div id="work_area">
+				<div id="top_line">
+					<p style="margin-left:10px; padding-top:6px;">
+						Шаг 1. Выбор характеристик для сравнения объектов.
+					</p>
+				</div>
+
+					<div class="form_l">
+							<div class="step_l">
+								Название кластера
+							</div>
+							<div id="f_c_l">
+								<span class="f_c_left">Название кластера и информация об отрасли &nbsp;</span>
+							</div>
+							<br>
+							<div class="features_info" id="f_n_l">
+									<input type="text" id = "claster_name" name="claster_name" class="inputs_l"  placeholder="Введите название кластера"> 
+									<input type="text" name="branch" class="inputs_l"  placeholder="Введите отрасль">
+								<input type="text" id = "e_i_r" pattern="\d+" name="employed_in_region" class="inputs_l"  placeholder="Введите число занятых в отрасли по региону">
+									<input type="text" pattern="\d+" name="employed_in_country" class="inputs_l"  placeholder="Введите число занятых в отрасли по стране">		
+							</div>
+
+							<div class = "radio">
+							<br><br>
+								 <div id = "metrika">
+								 		<span class="k"> Выбор метрики </span><br>
+									<input type = "radio" name = "metrika" id = "evclid"> Евклидово расстояние <a class='support' tabindex="1"><em>?</em><span class='answer'>Для определения расстояния между предприятиями используется формула, которая
+									Представляет собой геометрическое расстояние в многомерном пространстве. Наиболее распространенная функция расстояния.  <img src="http://imgx1.tmweb.ru/img/pnorm.jpg"><br>
+									<ul>
+										<li>p(x,x') - расстояние между i-тым и j-тым объектами;</li>
+										<li>x - численное значение k-той переменной для i-того объекта;</li>
+										<li>x' - численное значение k-той переменной для j-того объекта;</li>
+										<li>n - количество переменных, которыми описываются объекты.</li>
+									</ul></span></a> <input type = "text" value = "2" id="pow">(Степень евклидовой метрики)<BR>
+									<input type = "radio" name = "metrika" id = "ny"> "Манхэттенская" <a class='support' tabindex="1"><em>?</em><span class='answer'>Расстояние городских кварталов (манхэттенское расстояние)
+Это расстояние является средним разностей по координатам. В большинстве случаев эта мера расстояния приводит к таким же результатам, как и для обычного расстояния Евклида. Однако для этой меры влияние отдельных больших разностей (выбросов) уменьшается (т.к. они не возводятся в квадрат).<img src="http://imgx1.tmweb.ru/img/ny.jpg"><br>
+									<ul>
+										<li>p(x,x') - расстояние между i-тым и j-тым объектами;</li>
+										<li>x - численное значение k-той переменной для i-того объекта;</li>
+										<li>x' - численное значение k-той переменной для j-того объекта;</li>
+										<li>n - количество переменных, которыми описываются объекты.</li>
+									</ul></span></a><BR>
+									<input type = "radio" name = "metrika" id = "city">Махаланобиса <a class='support' tabindex="1"><em>?</em><span class='answer'>Расстояние Махаланобиса отличается от Евклидова тем, что учитывает корреляции между переменными. При выборе данной метрики отпадает необходимость нормировки значиний. <img src="http://imgx1.tmweb.ru/img/mah.png"><br></span></a><BR>
+								</div>
+								 <div id = "norma">
+								 	<br>
+								 		<span class="k"> Способ нормировки значений характеристик </span><br>
+								 	<input type = "radio" name = "norma" id = "standart"> Стандартная нормировка(делим на стандартное отклонение, отнимаем среднее) <a class='support' tabindex="1"><em>?</em><span class='answer'>Для приведения всех значений характеристик к одинковым единицам измерения используется нормировка: <img src="http://imgx1.tmweb.ru/img/normnorm.gif">, <br>где Xil — значение l-го признака у i-го объекта;
+ Xl— среднее значение l-го признака; Sl - среднеквадратическое отколонение l-го признака<br></span></a><BR>
+									<input type = "radio" name = "norma" id = "min">Минимум <a class='support' tabindex="1"><em>?</em><span class='answer'>Для приведения всех значений характеристик к одинковым единицам измерения используется нормировка: il — значение l-го признака у i-го объекта делится на минимальное значение l-го признака</span></a><BR>
+									<input type = "radio" name = "norma" id = "max">Максимум <a class='support' tabindex="1"><em>?</em><span class='answer'>Для приведения всех значений характеристик к одинковым единицам измерения используется нормировка: il — значение l-го признака у i-го объекта делится на <b>максимальное</b> значение l-го признака</span></a><BR>
+									<input type = "radio" name = "norma" id = "sred">Среднее <a class='support' tabindex="1"><em>?</em><span class='answer'>Для приведения всех значений характеристик к одинковым единицам измерения используется нормировка: il — значение l-го признака у i-го объекта делится на <b>среднее</b> значение l-го признака</span></a><BR>
+								</div>
+								<div id = "single">
+								 	<br>
+								 		<span class="k"> Метод одиночной связи </span><br>
+								 	<input type = "radio" name = "single" id = "far">Метод "дальнего соседа" <a class='support' tabindex="1"><em>?</em><span class='answer'>Степень близости оценивается между наиболее близкими объектами этих кластеров. </span></a><BR>
+									<input type = "radio" name = "single" id = "close"> Метод "ближнего соседа" <a class='support' tabindex="1"><em>?</em><span class='answer'>Степень близости оценивается по степени близости между  наиболее отдаленными объектами кластеров.</span></a><BR>
+									<input type = "radio" name = "single" id = "mid"> Метод средней связи <a class='support' tabindex="1"><em>?</em><span class='answer'>Степень близости оценивается как средняя величина степеней близости между объектами кластеров.</span></a><BR>
+								</div>						
+							</div>		
+					</div>
+					<div class="form_r" id="form1">
+							<div class="step_r">
+								Характеристики для анализа
+							</div>
+							<div style = "width: 100%;">
+							<div class="features_count">
+								<p class="f_c_right1">№ характеристики</p>
+							</div>
+
+								<div class="features_names">
+										<p class="f_c_right1">Название характеристики</p>
+								</div>
+
+							<div class="features_weight">
+								<p class="f_c_right1">Вес <a class='support' tabindex="1"><em>?</em><span class='answer'>Используется для определения степени значимости характеристики, любое положительное число</span></a></p> 
+							</div>
+						</div>
+<!-- ################################################################################################### !-->							
+							<div class="f_cnt" id="f_c_r">
+								<div style = "width: 20%; float: left; height: 18px; margin-bottom:21px; text-align: center;"class = "nomer" ><p>1</p></div>
+								<div style="width: 20%; float: left; height: 18px; margin-bottom:21px;" class = "weight" ><input type="text" name="weight" class="inputs_m" id="i_m"></div>
+								<div class="features_names" id="f_n_r">
+									<input type="text" name="dynamic" class="inputs_r" id="i_r" placeholder="Введите название характеристики"> 
+							</div>
+							</div>
+
+							
+
+
+							</form>
+					</div>
+<script>
+var array = [% array_claster %];
+</script>
+
+				<div id="bot_line">
+							<div id="btns_right">
+									<input type="button" class="btn" id="add2" value="Добавить" name="add">
+									<input type="button" class="btn" id="del2" value="Удалить" name="delete">
+									<input type="button" class="btn" id="res2" value="Сбросить" name="reset">
+									<input type="submit" onclick="return com(array);" class="btn" id="next" value="Далее >>>" name="next">
+							</div>
+									
+				</div>
+			</div>
+			</form>
+		</div>
+		
+		<div id="f_line">
+		</div>
+		<footer>
+			<p class = "copy">© ФГБОУ  ВПО «ИрГУПС»</p>
+		</footer>
+	</body>
+</html>

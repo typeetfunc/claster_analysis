@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Анализ</title>
+<link href="http://imgx1.tmweb.ru/css/step2.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/step2.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/jquery-placeholder.js"></script>
+<meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
+</head>
+	<body>
+		<header>
+			<p class = "head">Анализ кластеризации региона</p>
+		</header>
+		<div id="h_line">
+		</div>
+		<div id="main">
+			<form name="features" action="http://imgx1.tmweb.ru/cgi-bin/step3.pl" method="POST"> 
+			<div id="work_area">
+				<div id="top_line">
+					<p style="margin-left:10px; padding-top:6px;">
+						Шаг 2. Выбор предприятий для анализа.
+					</p>
+				</div>
+
+					<div class="form_l">
+							<div class="step_l">
+								Предприятия, предположительно составляющие кластер.
+							</div>
+							<div style = "width: 100%;">
+							<div class="features_count" id="f_c_l">
+								<p class="f_c_left">Предприятие №1 &nbsp;</p>
+							</div>
+							
+								<div class="features_names" id="f_n_l">
+										<input type="text" name="dynamic_i" class="inputs_l" placeholder="Введите название предприятия"> 
+								</div>
+							</div>							
+					</div>
+					<div class="form_r" id="form1">
+							<div class="step_r">
+								Остальные анализируемые предприятия.
+							</div>
+							<div class="features_count" id="f_c_r">
+								<p class="f_c_right">Предприятие №1 &nbsp;</p>
+							</div> 
+								<div class="features_names" id="f_n_r">
+										<input type="text" name="dynamic_o" class="inputs_r" id="i_r" placeholder="Введите название предприятия"> 
+								</div>
+					</div>
+
+				<div id="bot_line">
+							<div id="btns_left">
+									<input type="button" class="btn" id="add1" value="Добавить" name="add">
+									<input type="button" class="btn" id="del1" value="Удалить" name="delete">
+									<input type="button" class="btn" id="res1" value="Сбросить" name="reset">
+							</div>
+							<div id="btns_right">
+									<input type="button" class="btn" id="add2" value="Добавить" name="add">
+									<input type="button" class="btn" id="del2" value="Удалить" name="delete">
+									<input type="button" class="btn" id="res2" value="Сбросить" name="reset">
+									<input type="submit" onclick="return com();" class="btn" id="next" value="Далее >>>" name="next">
+							</div>
+				</div>
+			</div>
+</form>
+		</div>
+		<div id="f_line">
+		</div>
+		<footer>
+			<p class = "copy" >© ФГБОУ  ВПО «ИрГУПС»</p>
+		</footer>
+	</body>
+</html>

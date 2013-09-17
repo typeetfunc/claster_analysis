@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Анализ</title>
+<link href="http://imgx1.tmweb.ru/css/step3.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/step2.js"></script>
+<script type="text/javascript" src="http://imgx1.tmweb.ru/js/jquery-placeholder.js"></script>
+<meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
+</head>
+	<body>
+		<header>
+			<p class = "head">Анализ кластеризации региона</p>
+		</header>
+		<div id="h_line">
+		</div>
+		<div id="main">
+			<form name="features" action="http://imgx1.tmweb.ru/cgi-bin/report.pl" method="POST"> 
+			<div id="work_area">
+				<div id="top_line">
+					<p style="margin-left:10px; padding-top:6px;">
+						Шаг 3. Установка значений характеристик.[%c%]
+					</p>
+				</div>
+
+					<div class="form_l">
+							<div class="step_l">
+								Предприятия, предположительно составляющие кластер.
+							</div>
+							<div class="features_count" id="f_c_l">
+								<ul>
+								[% FOREACH i = companies_i.keys %]								
+									<li>
+										[% companies_i.$i %] <ul>
+												[%  FOREACH j = features.keys %] 
+													<li>
+														[% features.$j %] <input type="text" name="[% i %]_[% j %]" placeholder="Введите значение ">
+													</li>
+												[% END %]
+												</ul>
+									</li>
+								[% END %]
+								</ul>
+							</div>
+					</div>
+					<div class="form_r">
+							<div class="step_r">
+								Остальные анализируемые предприятия.
+							</div>
+							<div class="features_names" id="f_c_r">
+								<ul>
+								[% FOREACH l = companies_o.keys %]								
+									<li>
+										[% companies_o.$l %] <ul>
+												[% FOREACH j = features.keys %] 
+													<li>
+														[% features.$j %] <input type="text" name="[% l %]_[% j %]" placeholder="Введите значение ">
+													</li>
+												[% END %]
+												</ul>
+									</li>
+								[% END %]
+								</ul>
+							</div>
+					</div>
+				<div id="bot_line">
+							<div id="btns_right">
+									<input type="submit" class = "btn" onclick="return com();" id="next" value="Далее >>>" name="next">
+							</div>
+				</div>
+			</div>
+</form>
+		</div>
+		<div id="f_line">
+		</div>
+		<footer>
+			<p class = "copy" >© ФГБОУ  ВПО «ИрГУПС»</p>
+		</footer>
+	</body>
+</html>
